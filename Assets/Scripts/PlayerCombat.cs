@@ -26,7 +26,6 @@ public class PlayerCombat : MonoBehaviour
     
     private PlayerStats ps;
     private PlayerMovement pm;
-    private float combatActionTimer; 
     public bool attacking;
     void Start()
     {
@@ -104,7 +103,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 if (hitstun < Time.timeSinceLevelLoad)
                 {
-                    Debug.Log(gameObject.name + " hit by " + other.gameObject.tag);
+                    Debug.Log(gameObject.name + " hit by " + bps.BodyPart);
                     hitstun = Time.timeSinceLevelLoad + 0.5f;
                 }
             }

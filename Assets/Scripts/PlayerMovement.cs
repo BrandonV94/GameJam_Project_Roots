@@ -6,10 +6,11 @@ using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public KeyCode left;
-    public KeyCode right;
+    public KeyCode forward;
+    public KeyCode backward;
     public KeyCode jump;
     public KeyCode crouch;
+    public KeyCode block;
     private PlayerStats ps;
     private PlayerCombat pc;
 
@@ -21,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     public bool crouching;
+    
+    [SerializeField]
+    public bool blocking;
 
     void Start()
     {
@@ -47,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         // Move forward
-        if (Input.GetKey(right) && !jumping && !pc.attacking)
+        if (Input.GetKey(forward) && !jumping && !pc.attacking)
         {
             ps.rb.velocity =  new Vector3(transform.forward.x * 2, 0, 0);
             ps.pAnimator.SetBool("Walk Forwards", true);
@@ -58,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Move backwards
-        if (Input.GetKey(left) && !jumping && !pc.attacking)
+        if (Input.GetKey(backward) && !jumping && !pc.attacking)
         {
             ps.rb.velocity = new Vector3(transform.forward.x * -2, 0, 0);
             ps.pAnimator.SetBool("Walk Backwards", true);
@@ -77,14 +81,38 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Crouch
-        if (Input.GetKey(crouch) && grounded && !jumping & !pc.attacking)
+        if (Input.GetKey(crouch) && grounded && !jumping && !blocking)
         {
             crouching = true;
             ps.pAnimator.SetBool("Crouching", true);
         }
         else
         {
+            crouching = false;
             ps.pAnimator.SetBool("Crouching", false);
+        }
+
+        if (crouching)
+        {
+            ps.collider.center = new Vector3(2.80575852e-16f, 0.464120507f, 0.144743741f);
+            ps.collider.size = new Vector3(1, 0.977067351f, 0.760293782f);
+        }
+        else
+        {
+            ps.collider.center = new Vector3(7.03262339e-17f, 0.838553965f, -0.020573765f);
+            ps.collider.size = new Vector3(1, 1.72593439f, 0.4296588f);
+        }
+        
+        // Block
+        if (Input.GetKey(block) && grounded && !jumping & !pc.attacking && !crouching)
+        {
+            blocking = true;
+            ps.pAnimator.SetBool("Blocking", true);
+        }
+        else
+        {
+            blocking = false;
+            ps.pAnimator.SetBool("Blocking", false);
         }
     }
 
