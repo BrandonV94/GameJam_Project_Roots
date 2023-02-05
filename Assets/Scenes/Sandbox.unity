@@ -1014,8 +1014,10 @@ MonoBehaviour:
   left: 97
   right: 100
   jump: 119
+  crouch: 115
   grounded: 0
   jumping: 0
+  crouching: 0
 --- !u!114 &296674444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1809,8 +1811,10 @@ MonoBehaviour:
   left: 275
   right: 276
   jump: 273
+  crouch: 0
   grounded: 0
   jumping: 0
+  crouching: 0
 --- !u!114 &436001185
 MonoBehaviour:
   m_ObjectHideFlags: 0
