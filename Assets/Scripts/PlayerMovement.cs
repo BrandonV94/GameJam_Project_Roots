@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode left;
     public KeyCode right;
     public KeyCode jump;
+    public KeyCode crouch;
     private PlayerStats ps;
     private PlayerCombat pc;
 
@@ -17,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField]
     private bool jumping;
+
+    [SerializeField]
+    private bool crouching;
 
     void Start()
     {
@@ -70,6 +74,17 @@ public class PlayerMovement : MonoBehaviour
             jumping = true;
             ps.pAnimator.SetBool("Jumping", true);
             ps.rb.velocity = new Vector3(0, 4, 0);
+        }
+
+        // Crouch
+        if (Input.GetKey(crouch) && grounded && !jumping & !pc.attacking)
+        {
+            crouching = true;
+            ps.pAnimator.SetBool("Crouching", true);
+        }
+        else
+        {
+            ps.pAnimator.SetBool("Crouching", false);
         }
     }
 
