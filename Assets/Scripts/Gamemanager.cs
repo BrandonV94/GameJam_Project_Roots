@@ -13,7 +13,14 @@ public class Gamemanager : MonoBehaviour
     public GameObject winnerText; 
     
     public bool gameOver = false;
-    
+
+    public GameObject gameOverScreen;
+
+    private void Start()
+    {
+        gameOverScreen.SetActive(false);
+    }
+
     private void Update()
     {
         if (gameOver == false)
@@ -33,6 +40,10 @@ public class Gamemanager : MonoBehaviour
                 winnerText.SetActive(true);
                 winnerText.GetComponent<TMP_Text>().text = "Player 1 Wins!";
             }
+        }
+        else
+        {
+            gameOverScreen.SetActive(true);
         }
     }
 }
