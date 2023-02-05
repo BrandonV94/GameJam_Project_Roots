@@ -6,21 +6,22 @@ using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Animator pAnimator;
-    Rigidbody rb;
-    BoxCollider collider;
+    public KeyCode left;
+    public KeyCode right;
+    public KeyCode jump;
+    private PlayerStats ps;
+    private PlayerCombat pc;
 
     [SerializeField]
     private bool grounded;
     
     [SerializeField]
     private bool jumping;
-    
+
     void Start()
     {
-        collider = GetComponent<BoxCollider>();
-        pAnimator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+        ps = GetComponent<PlayerStats>();
+        pc = GetComponent<PlayerCombat>();
     }
 
 
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
         grounded = isGrounded();
         if (grounded && jumping)
         {
+            ps.pAnimator.SetBool("Jumping", false);
             jumping = false;
         }
     }
@@ -41,40 +43,40 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         // Move forward
-        if (Input.GetKey(KeyCode.D) && !jumping)
+        if (Input.GetKey(right) && !jumping && !pc.attacking)
         {
-            rb.velocity = new Vector3(1, 0, 0);
-            pAnimator.SetBool("Walk Forwards", true);
+            ps.rb.velocity =  new Vector3(transform.forward.x * 2, 0, 0);
+            ps.pAnimator.SetBool("Walk Forwards", true);
         }
         else
         {
-            pAnimator.SetBool("Walk Forwards", false);
+            ps.pAnimator.SetBool("Walk Forwards", false);
         }
 
         // Move backwards
-        if (Input.GetKey(KeyCode.A) && !jumping)
+        if (Input.GetKey(left) && !jumping && !pc.attacking)
         {
-            rb.velocity = new Vector3(-1, 0, 0);
-            pAnimator.SetBool("Walk Backwards", true);
+            ps.rb.velocity = new Vector3(transform.forward.x * -2, 0, 0);
+            ps.pAnimator.SetBool("Walk Backwards", true);
         }
         else
         {
-            pAnimator.SetBool("Walk Backwards", false);
+            ps.pAnimator.SetBool("Walk Backwards", false);
         }
 
         //Jump
-        if (Input.GetKey(KeyCode.Space) && grounded && !jumping)
+        if (Input.GetKey(jump) && grounded && !jumping & !pc.attacking)
         {
             jumping = true;
-            pAnimator.SetBool("Jumping", true);
-            rb.velocity = new Vector3(0, 4, 0);
+            ps.pAnimator.SetBool("Jumping", true);
+            ps.rb.velocity = new Vector3(0, 4, 0);
         }
     }
 
     bool isGrounded()
     {
         RaycastHit[] hits;
-        hits = Physics.RaycastAll(collider.bounds.center, Vector3.down, collider.bounds.extents.y);
+        hits = Physics.RaycastAll(ps.collider.bounds.center, Vector3.down, ps.collider.bounds.extents.y);
 
         for (int i = 0; i < hits.Length; i++)
         {
