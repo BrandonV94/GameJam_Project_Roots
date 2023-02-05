@@ -84,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            crouching = false;
             ps.pAnimator.SetBool("Crouching", false);
         }
     }

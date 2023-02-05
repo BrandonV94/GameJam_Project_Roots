@@ -38,33 +38,33 @@ public class PlayerCombat : MonoBehaviour
     void Update()
     {
         // Low punch and low kick
-        if (Input.GetKey(pm.crouch) && Input.GetKey(punch) && !attacking)
+        if (pm.crouching == true && Input.GetKey(punch) && !attacking)
         {
             attacking = true;
             leftArmActive = true;
             ps.pAnimator.SetTrigger("Low_Punch");
         }
-
-        if (Input.GetKey(pm.crouch) && Input.GetKey(kick) && !attacking)
+        else if (pm.crouching == true && Input.GetKey(kick) && !attacking)
         {
             attacking = true;
             rightLegActive = true;
             ps.pAnimator.SetTrigger("Low_Kick");
         }
-
-        //Punch and kick
-        if (Input.GetKey(punch) && !attacking)
+        else if (Input.GetKey(punch) && !attacking)
         {
             attacking = true;
             leftArmActive = true;
             ps.pAnimator.SetTrigger("Attack_1");
         } 
-        
-        if (Input.GetKey(kick) && !attacking)
+        else if (Input.GetKey(kick) && !attacking)
         {
             attacking = true;
             rightLegActive = true;
             ps.pAnimator.SetTrigger("Attack_2");
+        }
+        else
+        {
+            // DO nothing
         }
     }
 
