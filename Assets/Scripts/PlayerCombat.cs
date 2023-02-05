@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     private float hitstun;
+    public float hurtStun;
     
     private string[] bodyTags = new[]
     {
@@ -123,23 +124,27 @@ public class PlayerCombat : MonoBehaviour
                     switch (bps.playerReference.currentAttack)
                     {
                         case AttackType.lowKick:
-                            ps.health -= 20;
-                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 5;
+                            ps.health -= 30;
+                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 8;
+                            hurtStun = Time.timeSinceLevelLoad + 1;
                             break;
                         
                         case AttackType.standingKick:
-                            ps.health -= 30;
-                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 8;
+                            ps.health -= 20;
+                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 5;
+                            hurtStun = Time.timeSinceLevelLoad + 1;
                             break;
                         
                         case AttackType.upperCut:
-                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 3;
-                            ps.health -= 20;
+                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 4;
+                            ps.health -= 25;
+                            hurtStun = Time.timeSinceLevelLoad + 2;
                             break;
                         
                         case AttackType.standingPunch:
-                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 2;
+                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 3;
                             ps.health -= 10;
+                            hurtStun = Time.timeSinceLevelLoad + 1;
                             break;
                     }
                 }

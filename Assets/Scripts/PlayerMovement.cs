@@ -35,7 +35,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Move();
+        if (pc.hurtStun < Time.timeSinceLevelLoad)
+        {
+            Move();
+        }
     }
 
     private void FixedUpdate()
@@ -81,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }*/
 
         // Crouch
-        if (Input.GetKey(crouch) && grounded && !jumping && !blocking && !pc.attacking)
+        if (Input.GetKey(crouch) && grounded && !jumping && !blocking)
         {
             crouching = true;
             ps.pAnimator.SetBool("Crouching", true);
