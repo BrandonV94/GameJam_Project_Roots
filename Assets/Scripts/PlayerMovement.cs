@@ -42,7 +42,6 @@ public class PlayerMovement : MonoBehaviour
             ps.pAnimator.SetBool("Jumping", false);
             jumping = false;
         }
-        Debug.Log(grounded);
     }
 
     void Move()
@@ -85,15 +84,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            crouching = false;
             ps.pAnimator.SetBool("Crouching", false);
         }
     }
 
     bool isGrounded()
-    {
+    { 
         RaycastHit[] hits;
-        hits = Physics.RaycastAll(ps.collider.bounds.center, Vector3.down, ps.collider.bounds.extents.y + 0.1f);
+        hits = Physics.RaycastAll(ps.collider.bounds.center, Vector3.down, ps.collider.bounds.extents.y);
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -103,7 +101,8 @@ public class PlayerMovement : MonoBehaviour
                 return true;
             }
         }
-
+        
         return false;
+
     }
 }
