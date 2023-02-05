@@ -1811,7 +1811,7 @@ MonoBehaviour:
   left: 275
   right: 276
   jump: 273
-  crouch: 0
+  crouch: 274
   grounded: 0
   jumping: 0
   crouching: 0

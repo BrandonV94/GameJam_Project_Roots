@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private bool jumping;
 
     [SerializeField]
-    private bool crouching;
+    public bool crouching;
 
     void Start()
     {
@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded()
     { 
         RaycastHit[] hits;
-        hits = Physics.RaycastAll(ps.collider.bounds.center, Vector3.down, ps.collider.bounds.extents.y);
+        hits = Physics.RaycastAll(ps.collider.bounds.center, Vector3.down, ps.collider.bounds.extents.y + 0.1f);
 
         for (int i = 0; i < hits.Length; i++)
         {

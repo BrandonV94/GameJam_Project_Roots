@@ -25,16 +25,34 @@ public class PlayerCombat : MonoBehaviour
     public bool rightArmActive;
     
     private PlayerStats ps;
+    private PlayerMovement pm;
     private float combatActionTimer; 
     public bool attacking;
     void Start()
     {
         ps = GetComponent<PlayerStats>();
+        pm = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Low punch and low kick
+        if (Input.GetKey(pm.crouch) && Input.GetKey(punch) && !attacking)
+        {
+            attacking = true;
+            leftArmActive = true;
+            ps.pAnimator.SetTrigger("Low_Punch");
+        }
+
+        if (Input.GetKey(pm.crouch) && Input.GetKey(kick) && !attacking)
+        {
+            attacking = true;
+            rightLegActive = true;
+            ps.pAnimator.SetTrigger("Low_Kick");
+        }
+
+        //Punch and kick
         if (Input.GetKey(punch) && !attacking)
         {
             attacking = true;
@@ -47,7 +65,7 @@ public class PlayerCombat : MonoBehaviour
             attacking = true;
             rightLegActive = true;
             ps.pAnimator.SetTrigger("Attack_2");
-        } 
+        }
     }
 
     void ReleaseActionLock()
