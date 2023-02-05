@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         // Move forward
-        if (Input.GetKey(forward) && !jumping && !pc.attacking)
+        if (Input.GetKey(forward) && !jumping && !pc.attacking && !crouching)
         {
             ps.rb.velocity =  new Vector3(transform.forward.x * 2, 0, 0);
             ps.pAnimator.SetBool("Walk Forwards", true);
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Move backwards
-        if (Input.GetKey(backward) && !jumping && !pc.attacking)
+        if (Input.GetKey(backward) && !jumping && !pc.attacking && !crouching)
         {
             ps.rb.velocity = new Vector3(transform.forward.x * -2, 0, 0);
             ps.pAnimator.SetBool("Walk Backwards", true);
@@ -72,16 +72,16 @@ public class PlayerMovement : MonoBehaviour
             ps.pAnimator.SetBool("Walk Backwards", false);
         }
 
-        //Jump
+        /*//Jump
         if (Input.GetKey(jump) && grounded && !jumping & !pc.attacking)
         {
             jumping = true;
             ps.pAnimator.SetBool("Jumping", true);
             ps.rb.velocity = new Vector3(0, 4, 0);
-        }
+        }*/
 
         // Crouch
-        if (Input.GetKey(crouch) && grounded && !jumping && !blocking)
+        if (Input.GetKey(crouch) && grounded && !jumping && !blocking && !pc.attacking)
         {
             crouching = true;
             ps.pAnimator.SetBool("Crouching", true);
@@ -94,13 +94,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (crouching)
         {
-            ps.collider.center = new Vector3(3.63432192e-16f, 0.565289557f, 0.525574148f);
-            ps.collider.size = new Vector3(1, 1.02932751f, 2.05114746f);
+            ps.collider.center = new Vector3(6.49537051e-16f,0.545755684f,0.295707047f);
+            ps.collider.size = new Vector3(1,0.990259767f,1.59141397f);
         }
         else
         {
-            ps.collider.center = new Vector3(0, 1.01000631f, 0);
-            ps.collider.size = new Vector3(1, 1.91876101f, 1);
+            ps.collider.center = new Vector3(0,0.978107095f,0);
+            ps.collider.size = new Vector3(1,1.85496259f,1);
         }
         
         // Block

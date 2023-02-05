@@ -15,6 +15,17 @@ public class PlayerCombat : MonoBehaviour
         "leftLeg",
         "rightLeg"
     };
+
+    public enum AttackType
+    {
+        standingPunch,
+        standingKick,
+        lowKick,
+        upperCut,
+        none
+    }
+
+    public AttackType currentAttack;
     
     public KeyCode punch;
     public KeyCode kick;
@@ -41,24 +52,28 @@ public class PlayerCombat : MonoBehaviour
         {
             attacking = true;
             leftArmActive = true;
+            currentAttack = AttackType.upperCut;
             ps.pAnimator.SetTrigger("Low_Punch");
         }
         else if (pm.crouching == true && Input.GetKey(kick) && !attacking)
         {
             attacking = true;
             rightLegActive = true;
+            currentAttack = AttackType.lowKick;
             ps.pAnimator.SetTrigger("Low_Kick");
         }
         else if (Input.GetKey(punch) && !attacking)
         {
             attacking = true;
             leftArmActive = true;
+            currentAttack = AttackType.standingPunch;
             ps.pAnimator.SetTrigger("Attack_1");
         } 
         else if (Input.GetKey(kick) && !attacking)
         {
             attacking = true;
             rightLegActive = true;
+            currentAttack = AttackType.standingKick;
             ps.pAnimator.SetTrigger("Attack_2");
         }
         else
@@ -69,6 +84,7 @@ public class PlayerCombat : MonoBehaviour
 
     void ReleaseActionLock()
     {
+        currentAttack = AttackType.none;
         attacking = false;
         leftArmActive = false;
         rightArmActive = false;
@@ -103,8 +119,29 @@ public class PlayerCombat : MonoBehaviour
             {
                 if (hitstun < Time.timeSinceLevelLoad)
                 {
-                    Debug.Log(gameObject.name + " hit by " + bps.BodyPart);
-                    hitstun = Time.timeSinceLevelLoad + 0.5f;
+                    ReleaseActionLock();
+                    switch (bps.playerReference.currentAttack)
+                    {
+                        case AttackType.lowKick:
+                            ps.health -= 20;
+                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 5;
+                            break;
+                        
+                        case AttackType.standingKick:
+                            ps.health -= 30;
+                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 8;
+                            break;
+                        
+                        case AttackType.upperCut:
+                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 3;
+                            ps.health -= 20;
+                            break;
+                        
+                        case AttackType.standingPunch:
+                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 2;
+                            ps.health -= 10;
+                            break;
+                    }
                 }
             }
         }

@@ -8,6 +8,8 @@ public class PlayerStats : MonoBehaviour
     public Animator pAnimator;
     public Rigidbody rb;
     public BoxCollider collider;
+
+    public int health;
     
     // Start is called before the first frame update
     void Start()
