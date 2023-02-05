@@ -94,13 +94,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (crouching)
         {
-            ps.collider.center = new Vector3(2.80575852e-16f, 0.464120507f, 0.144743741f);
-            ps.collider.size = new Vector3(1, 0.977067351f, 0.760293782f);
+            ps.collider.center = new Vector3(3.63432192e-16f, 0.565289557f, 0.525574148f);
+            ps.collider.size = new Vector3(1, 1.02932751f, 2.05114746f);
         }
         else
         {
-            ps.collider.center = new Vector3(7.03262339e-17f, 0.838553965f, -0.020573765f);
-            ps.collider.size = new Vector3(1, 1.72593439f, 0.4296588f);
+            ps.collider.center = new Vector3(0, 1.01000631f, 0);
+            ps.collider.size = new Vector3(1, 1.91876101f, 1);
         }
         
         // Block
