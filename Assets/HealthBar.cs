@@ -14,7 +14,7 @@ public class HealthBar : MonoBehaviour
     {
         if (stats)
         {
-            bar.rectTransform.sizeDelta = new Vector2((stats.health / 100f) * maxWidth, 25);
+            bar.rectTransform.sizeDelta = new Vector2((stats.health / 100f) * maxWidth, 50);
         }
     }
 }

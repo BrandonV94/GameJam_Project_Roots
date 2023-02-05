@@ -128,23 +128,39 @@ public class PlayerCombat : MonoBehaviour
                             ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 8;
                             hurtStun = Time.timeSinceLevelLoad + 1;
                             break;
-                        
+
                         case AttackType.standingKick:
-                            ps.health -= 20;
-                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 5;
-                            hurtStun = Time.timeSinceLevelLoad + 1;
+                            if (pm.blocking)
+                            {
+                                bps.playerReference.hurtStun = Time.timeSinceLevelLoad + 3;
+                                ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 5;
+                            }
+                            else
+                            {
+                                ps.health -= 20;
+                                ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 5;
+                                hurtStun = Time.timeSinceLevelLoad + 1;
+                            }
                             break;
-                        
+
                         case AttackType.upperCut:
                             ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 4;
                             ps.health -= 25;
                             hurtStun = Time.timeSinceLevelLoad + 2;
                             break;
-                        
+
                         case AttackType.standingPunch:
-                            ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 3;
-                            ps.health -= 10;
-                            hurtStun = Time.timeSinceLevelLoad + 1;
+                            if (pm.blocking)
+                            {
+                                bps.playerReference.hurtStun = Time.timeSinceLevelLoad + 3;
+                                ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 3;
+                            }
+                            else
+                            {
+                                ps.rb.velocity = bps.playerReference.gameObject.transform.forward * 3;
+                                ps.health -= 10;
+                                hurtStun = Time.timeSinceLevelLoad + 1;
+                            }
                             break;
                     }
                 }
